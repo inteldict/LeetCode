@@ -84,53 +84,34 @@ class ListNode:
 
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        root = result = None
-        curry = False
-        while l1 and l2:
-            if root is not None:
-                result.next = ListNode()
-                result = result.next
-            else:
-                root = result = ListNode()
+        head = ListNode(0)  # Initialize a head to simplify edge cases
+        current = head
+        carry = 0
 
-            sum_val = l1.val + l2.val
-            if curry:
-                sum_val += 1
-                curry = False
+        # Loop through both linked lists until both are exhausted
+        while l1 or l2 or carry:
+            # Sum the values of the nodes and the carry
+            val1 = l1.val if l1 else 0
+            val2 = l2.val if l2 else 0
+            total_sum = val1 + val2 + carry
 
-            if sum_val > 9:
-                sum_val -= 10
-                curry = True
+            # Update carry for the next iteration
+            carry = total_sum // 10
 
-            result.val = sum_val
-            l1 = l1.next
-            l2 = l2.next
+            # Create a new node with the digit value
+            current.next = ListNode(total_sum % 10)
+            current = current.next
 
-        remainder = None
-        if l1 is not None:
-            remainder = l1
-        elif l2 is not None:
-            remainder = l2
+            # Move to the next nodes in the lists
+            if l1:
+                l1 = l1.next
+            if l2:
+                l2 = l2.next
 
-        while remainder is not None:
-            result.next = ListNode()
-            result = result.next
-            new_val = remainder.val
-            if curry:
-                new_val += 1
-                curry = False
-            if new_val > 9:
-                new_val -= 10
-                curry = True
-            result.val = new_val
-            remainder = remainder.next
-
-        if curry:
-            result.next = ListNode()
-            result = result.next
-            result.val = 1
-
-        return root
+        # Return the next element of the head
+        current = head.next
+        del head
+        return current
 
 
 class TestAddTwoNumbers(unittest.TestCase):
