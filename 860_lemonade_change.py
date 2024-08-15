@@ -79,24 +79,78 @@ class TestLemonadeChange(unittest.TestCase):
         self.assertEqual(expected_output, self.solution.lemonadeChange(bills))
 
 
-class Solution:
-    def lemonadeChange(self, bills: List[int]) -> bool:
-        change = collections.Counter({5: 0, 10: 0, 20: 0})
+# class Solution:
+#     def lemonadeChange(self, bills: List[int]) -> bool:
+#         # Count of $5 and $10 bills in hand
+#         five_dollar_bills = 0
+#         ten_dollar_bills = 0
+#
+#         # def process_bill(bill: int, price=5) -> bool:
+#         #     debt = bill - 5
+#         #     while debt > 0:
+#         #         if debt >= 10 and change[10] > 0:
+#         #             change[10] -= 1
+#         #             debt -= 10
+#         #             continue
+#         #         if debt >= 5 and change[5] > 0:
+#         #             change[5] -= 1
+#         #             debt -= 5
+#         #             continue
+#         #         # we have no change left
+#         #         return False
+#         #     change[bill] += 1
+#         #     return True
+#
+#         # each transaction is fixed to earn $5
+#         def process_bill(bill):
+#             nonlocal five_dollar_bills, ten_dollar_bills  # Declare as nonlocal to access the outer scope variables
+#             match bill:
+#                 case 5:
+#                     five_dollar_bills += 1
+#                 case 10:
+#                     if five_dollar_bills < 1:
+#                         return False
+#                     five_dollar_bills -= 1
+#                     ten_dollar_bills += 1
+#                 case 20:
+#                     if ten_dollar_bills > 0 and five_dollar_bills > 0:
+#                         ten_dollar_bills -= 1
+#                         five_dollar_bills -= 1
+#                     elif five_dollar_bills >= 3:
+#                         five_dollar_bills -= 3
+#                     else:
+#                         return False
+#                 case _:
+#                     return False
+#             return True
+#
+#         return all(process_bill(bill) for bill in bills)
 
-        def process_bill(bill: int, price=5) -> bool:
-            debt = bill - 5
-            while debt > 0:
-                if debt >= 10 and change[10] > 0:
-                    change[10] -= 1
-                    debt -= 10
-                    continue
-                if debt >= 5 and change[5] > 0:
-                    change[5] -= 1
-                    debt -= 5
-                    continue
-                # we have no change left
-                return False
-            change[bill] += 1
-            return True
 
-        return all(process_bill(bill) for bill in bills)
+# class Solution:
+#     def lemonadeChange(self, bills: List[int]) -> bool:
+#         # Count of $5 and $10 bills in hand
+#         five_dollar_bills = 0
+#         ten_dollar_bills = 0
+#
+#         # each transaction is fixed to earn $5
+#         for bill in bills:
+#             match bill:
+#                 case 5:
+#                     five_dollar_bills += 1
+#                 case 10:
+#                     if five_dollar_bills < 1:
+#                         return False
+#                     five_dollar_bills -= 1
+#                     ten_dollar_bills += 1
+#                 case 20:
+#                     if ten_dollar_bills > 0 and five_dollar_bills > 0:
+#                         ten_dollar_bills -= 1
+#                         five_dollar_bills -= 1
+#                     elif five_dollar_bills >= 3:
+#                         five_dollar_bills -= 3
+#                     else:
+#                         return False
+#                 # case _:
+#                 #     return False
+#         return True
