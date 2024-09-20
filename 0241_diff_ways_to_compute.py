@@ -1,4 +1,5 @@
 """
+# 241. Different Ways to Add Parentheses
 Given a string expression of numbers and operators, return all possible results from computing all the different possible ways to group numbers and operators. You may return the answer in any order.
 
 The test cases are generated such that the output values fit in a 32-bit integer and the number of different results does not exceed 104.
@@ -51,17 +52,11 @@ class TesIsPalindrome(unittest.TestCase):
         out = [-34, -14, -10, -10, 10]
         self.assertEqual(sorted(out), sorted(self.solution.diffWaysToCompute(expression)))
 
-    # def test_example_3(self):
-    #     expression = "2*3-4*5"
-    #     out = [-34, -14, -10, -10, 10]
-    #     self.assertEqual(out, self.solution.diffWaysToCompute(expression))
-
-
 class Solution:
     def diffWaysToCompute(self, expression: str) -> List[int]:
         operators = {'+', '-', '*'}
 
-        @cache
+        @cache  # this makes python3 do automatic memoization based on input arguments and output results
         def recursiveCompute(expression) -> List[int]:
             if len(expression) == 0:
                 return []
@@ -71,10 +66,8 @@ class Solution:
             results = []
             for i, c in enumerate(expression):
                 if c in operators:
-                    left_results = recursiveCompute(expression[:i])
-                    right_results = recursiveCompute(expression[i + 1:])
-                    for left in left_results:
-                        for right in right_results:
+                    for left in recursiveCompute(expression[:i]):
+                        for right in recursiveCompute(expression[i + 1:]):
                             match c:
                                 case '-':
                                     results.append(left - right)
