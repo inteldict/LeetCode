@@ -17,8 +17,6 @@ Roman numerals are formed by appending the conversions of decimal place values f
 
 Given an integer, convert it to a Roman numeral.
 
-
-
 Example 1:
 
 Input: num = 3749
@@ -57,10 +55,7 @@ Explanation:
   90 = XC
    4 = IV
 
-
-
 Constraints:
-
     1 <= num <= 3999
 """
 import unittest
@@ -86,32 +81,40 @@ class Test(unittest.TestCase):
         self.assertEqual(out, self.solution.intToRoman(num))
 
 
-class Solution:
+# class Solution:
+#     def __init__(self):
+#         self.digits = [(1000, "M"),
+#                         (900, "CM"), (500, "D"), (400, "CD"), (100, "C"),
+#                         (90, "XC"), (50, "L"), (40, "XL"), (10, "X"),
+#                         (9, "IX"), (5, "V"), (4, "IV"), (1, "I")]
+#
+#     def intToRoman(self, num: int) -> str:
+#         ans = []
+#         for val, sym in self.digits:
+#             if num >= val:
+#                 count, num = divmod(num, val)
+#                 ans.append(sym * count)
+#         return ''.join(ans)
+#
+# with open("user.out", "w") as f:
+#     s = Solution()
+#     for case in map(loads, stdin):
+#         f.write(f"\"{s.intToRoman(case)}\"\n")
+#     f.flush()
+# exit(0)
 
+# Fastest to the moment
+class Solution:
     def __init__(self):
-        self.int_romans = (1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
-        self.char_romans = ('M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I')
-        #
-        # self.romans = {
-        #     1: 'I',
-        #     4: "IV",
-        #     5: 'V',
-        #     9: 'IX',
-        #     10: 'X',
-        #     40: 'XL',
-        #     50: 'L',
-        #     90: 'XC',
-        #     100: 'C',
-        #     400: 'CD',
-        #     500: 'D',
-        #     900: 'CM',
-        #     1000: 'M',
-        # }
 
     def intToRoman(self, num: int) -> str:
+        digits = [(1000, "M"),
+                  (900, "CM"), (500, "D"), (400, "CD"), (100, "C"),
+                  (90, "XC"), (50, "L"), (40, "XL"), (10, "X"),
+                  (9, "IX"), (5, "V"), (4, "IV"), (1, "I")]
         ans = []
-        for i, r in enumerate(self.int_romans):
-            while num >= r:
-                num -= r
-                ans.append(self.char_romans[i])
+        for val, sym in digits:
+            if num >= val:
+                count, num = divmod(num, val)
+                ans.append(sym * count)
         return ''.join(ans)
