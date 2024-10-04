@@ -199,7 +199,7 @@ class Solution:
 
         return result
 
-# Beat them all with this implementation
+# Fastest execution time with this implementation
 
 # def threeSum(nums: List[int]) -> List[List[int]]:
 #     counts = Counter(nums)

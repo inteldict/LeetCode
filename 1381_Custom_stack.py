@@ -53,9 +53,10 @@ class Test(unittest.TestCase):
         for i in range(len(operations)):
             operation = operations[i]
             args = inputs[i]
-            if operation == "CustomStack":
-                # Instantiate the MyCalendar class
-                obj = CustomStack(*args)
+            if obj is None and operation in globals():
+                # Instantiate an instance
+                obj_class = globals()[operation]
+                obj = obj_class(*args)
                 result = None
             else:
                 # Dynamically call a method using getattr
